@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saranne Ndamba | EFL Teacher</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --royal:    #1a3a8f;
+    --royal-d:  #0f2460;
+    --royal-l:  #2d55c8;
+    --gold:     #c9972a;
+    --gold-l:   #e8b84b;
+    --gold-pale:#fdf4e0;
+    --white:    #ffffff;
+    --off-white:#f8f9fc;
+    --light:    #eef1f8;
+    --muted:    #6b7280;
+    --ink:      #111827;
+    --border:   #dce3f5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: var(--royal-d); border-bottom: 3px solid var(--gold); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.3rem; color: var(--white); text-decoration: none; }
+  .nav-logo span { color: var(--gold-l); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold-l); }
+  .nav-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 0.3rem; }
+  .nav-menu-btn span { display: block; width: 22px; height: 2px; background: var(--gold-l); margin: 5px 0; }
+  .mobile-menu { display: none; position: fixed; inset: 0; background: var(--royal-d); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.2rem; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--white); text-decoration: none; }
+  .mobile-menu a:hover { color: var(--gold-l); }
+  .mobile-close { position: absolute; top: 1.5rem; right: 1.8rem; background: none; border: none; color: var(--gold-l); font-size: 2.2rem; cursor: pointer; }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1.1fr 0.9fr; padding-top: 5rem; background: var(--royal-d); }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 6rem 4rem 6rem 3.5rem; position: relative; }
+  .hero-left::after { content: ''; position: absolute; right: 0; top: 12%; bottom: 12%; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); }
+  .hero-tag { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-l); margin-bottom: 1.8rem; }
+  .hero-tag::before { content: ''; display: block; width: 28px; height: 1.5px; background: var(--gold-l); }
+  .hero-name { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: clamp(4rem, 6.5vw, 7rem); line-height: 0.9; color: var(--white); margin-bottom: 1.2rem; }
+  .hero-name .accent { color: var(--gold-l); display: block; }
+  .hero-sub { font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.8; max-width: 420px; margin-bottom: 2.5rem; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.8rem; }
+  .badge { padding: 0.32rem 0.85rem; border: 1px solid rgba(201,151,42,0.35); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); border-radius: 2px; }
+  .badge.filled { background: var(--gold); border-color: var(--gold); color: var(--royal-d); font-weight: 700; }
+  .hero-cta { display: flex; gap: 1.2rem; align-items: center; }
+  .btn-primary { padding: 0.85rem 2rem; background: var(--gold); color: var(--royal-d); font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 4px 4px 0 rgba(201,151,42,0.35); display: inline-block; }
+  .btn-primary:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 rgba(201,151,42,0.45); }
+  .btn-secondary { font-size: 0.84rem; font-weight: 500; color: rgba(255,255,255,0.6); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+  .btn-secondary:hover { color: var(--gold-l); border-color: var(--gold-l); }
+  .hero-right { background: var(--royal); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 4rem 3rem; position: relative; overflow: hidden; }
+  .hero-right::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 75% 25%, rgba(201,151,42,0.14) 0%, transparent 55%), radial-gradient(circle at 25% 75%, rgba(201,151,42,0.07) 0%, transparent 45%); }
+  .hero-ring { position: absolute; width: 360px; height: 360px; border-radius: 50%; border: 1px solid rgba(201,151,42,0.12); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .hero-ring-2 { width: 260px; height: 260px; border-color: rgba(201,151,42,0.08); }
+  .photo-placeholder { width: 190px; height: 190px; border-radius: 50%; border: 2px solid rgba(201,151,42,0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(201,151,42,0.06); margin-bottom: 2rem; position: relative; z-index: 1; }
+  .photo-placeholder svg { opacity: 0.3; margin-bottom: 0.5rem; }
+  .photo-placeholder p { font-size: 0.68rem; color: rgba(255,255,255,0.3); text-align: center; line-height: 1.4; padding: 0 1rem; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 100%; max-width: 290px; position: relative; z-index: 1; }
+  .stat { padding: 1.1rem; background: rgba(15,36,96,0.7); text-align: center; border: 1px solid rgba(201,151,42,0.12); }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 2.2rem; color: var(--gold-l); display: block; line-height: 1; }
+  .stat-num em { font-style: normal; color: rgba(255,255,255,0.35); font-size: 1.3rem; }
+  .stat-label { font-size: 0.62rem; color: rgba(255,255,255,0.38); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-top: 0.3rem; }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+  .section-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.9rem; }
+  .section-label::before { content: ''; display: block; width: 20px; height: 1.5px; background: var(--gold); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: clamp(2.2rem, 3.5vw, 3.5rem); line-height: 1.05; color: var(--royal-d); margin-bottom: 1rem; }
+  .section-desc { font-size: 0.98rem; font-weight: 300; color: var(--muted); line-height: 1.75; max-width: 560px; margin-bottom: 3rem; }
+
+  /* ABOUT */
+  #about { background: var(--off-white); }
+  .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 4rem; align-items: start; }
+  .about-text { font-size: 1rem; line-height: 1.85; color: #374151; }
+  .about-text p { margin-bottom: 1.2rem; }
+  .about-text strong { color: var(--royal); font-weight: 600; }
+  .philosophy-block { border-left: 3px solid var(--gold); padding: 1.3rem 1.6rem; background: var(--gold-pale); margin-top: 1.8rem; }
+  .philosophy-block p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--royal-d); line-height: 1.7; margin: 0; }
+  .about-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+  .sidebar-card { background: var(--white); border: 1px solid var(--border); border-top: 3px solid var(--royal); padding: 1.3rem; }
+  .sidebar-card h4 { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--royal); margin-bottom: 0.8rem; }
+  .sidebar-card ul { list-style: none; }
+  .sidebar-card ul li { font-size: 0.87rem; color: var(--muted); line-height: 1.6; padding: 0.28rem 0; border-bottom: 1px solid var(--border); }
+  .sidebar-card ul li:last-child { border-bottom: none; }
+  .sidebar-card ul li::before { content: '+ '; color: var(--gold); font-weight: 700; }
+
+  /* QUALIFICATIONS */
+  #qualifications { background: var(--white); }
+  .qual-main { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+  .qual-card { background: var(--white); border: 1px solid var(--border); padding: 2rem; position: relative; transition: transform 0.25s, box-shadow 0.25s; }
+  .qual-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--royal); }
+  .qual-card.primary::before { background: linear-gradient(90deg, var(--royal), var(--gold)); }
+  .qual-card.primary::after { content: 'LEVEL 5 DIPLOMA'; position: absolute; top: 1.2rem; right: 1.2rem; background: var(--royal); color: var(--gold-l); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; padding: 0.22rem 0.55rem; }
+  .qual-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(26,58,143,0.1); }
+  .qual-icon { width: 42px; height: 42px; background: var(--royal); display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; border-radius: 2px; }
+  .qual-card h3 { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.15rem; margin-bottom: 0.4rem; line-height: 1.3; color: var(--royal-d); }
+  .qual-card .qual-org { font-size: 0.78rem; color: var(--gold); font-weight: 600; margin-bottom: 0.8rem; }
+  .qual-card p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; }
+  .alison-heading { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.35rem; color: var(--royal-d); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+  .alison-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .cpd-tag { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: var(--gold-pale); color: var(--gold); border: 1px solid var(--gold-l); padding: 0.2rem 0.5rem; border-radius: 2px; }
+  .alison-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .alison-card { background: var(--off-white); border: 1px solid var(--border); border-left: 4px solid var(--gold); padding: 1.3rem; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 0.5rem; }
+  .alison-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(26,58,143,0.08); }
+  .alison-card .cert-type { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+  .alison-card h4 { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1rem; color: var(--royal-d); line-height: 1.3; }
+  .alison-card .cert-meta { font-size: 0.76rem; color: var(--muted); }
+  .alison-card .verify-link { font-size: 0.72rem; color: var(--royal); text-decoration: none; font-weight: 600; margin-top: auto; display: inline-flex; align-items: center; gap: 0.3rem; padding-top: 0.5rem; border-top: 1px solid var(--border); }
+  .alison-card .verify-link:hover { color: var(--gold); }
+
+  /* PORTFOLIO */
+  #portfolio { background: var(--light); }
+
+  /* Assignment group headers */
+  .assignment-group { margin-bottom: 3rem; }
+  .assignment-label { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+  .assignment-label h3 { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.3rem; color: var(--royal-d); }
+  .assignment-label .assign-badge { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: var(--royal); color: var(--gold-l); padding: 0.22rem 0.6rem; }
+  .assignment-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .portfolio-grid.two-col { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+
+  .portfolio-card { background: var(--white); border: 1px solid var(--border); overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; display: flex; flex-direction: column; }
+  .portfolio-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(26,58,143,0.1); }
+
+  .portfolio-card-top { height: 100px; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 2.8rem; position: relative; flex-shrink: 0; }
+  .portfolio-card-top.b1 { background: var(--royal-d); color: rgba(255,255,255,0.1); }
+  .portfolio-card-top.b2 { background: var(--royal); color: rgba(255,255,255,0.1); }
+  .portfolio-card-top.b3 { background: #162f7a; color: rgba(255,255,255,0.1); }
+  .portfolio-card-top.b4 { background: #0a1a5e; color: rgba(255,255,255,0.1); }
+  .portfolio-card-top.b5 { background: #1e3fa3; color: rgba(255,255,255,0.1); }
+  .portfolio-card-top.b6 { background: #0d2460; color: rgba(255,255,255,0.1); }
+  .portfolio-card-top.c1 { background: var(--gold); color: rgba(15,36,96,0.15); }
+  .portfolio-card-top.c2 { background: #b8841f; color: rgba(255,255,255,0.1); }
+  .portfolio-card-top.c3 { background: #d4a030; color: rgba(15,36,96,0.15); }
+  .portfolio-card-top.c4 { background: #9a6f18; color: rgba(255,255,255,0.1); }
+  .portfolio-card-top.c5 { background: #c49025; color: rgba(15,36,96,0.12); }
+
+  .card-label { position: absolute; top: 0.7rem; left: 1rem; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); font-family: 'DM Sans', sans-serif; }
+  .portfolio-card-top.c1 .card-label,
+  .portfolio-card-top.c3 .card-label,
+  .portfolio-card-top.c5 .card-label { color: rgba(15,36,96,0.5); }
+
+  .portfolio-card-body { padding: 1.2rem; display: flex; flex-direction: column; flex: 1; }
+  .portfolio-card-body h3 { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.35rem; color: var(--royal-d); line-height: 1.3; }
+  .portfolio-card-body p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; margin-bottom: 0.8rem; font-weight: 300; flex: 1; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.9rem; }
+  .tag { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.18rem 0.5rem; background: var(--light); border: 1px solid var(--border); color: var(--muted); }
+
+  /* THE KEY BUTTON */
+  .doc-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: var(--royal);
+    color: var(--white);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    transition: background 0.2s, transform 0.2s;
+    margin-top: auto;
+  }
+  .doc-link:hover { background: var(--royal-l); transform: translateY(-1px); }
+  .doc-link svg { flex-shrink: 0; }
+  .doc-link.gold { background: var(--gold); color: var(--royal-d); }
+  .doc-link.gold:hover { background: var(--gold-l); }
+
+  /* SKILLS */
+  #skills { background: var(--royal-d); }
+  #skills .section-label { color: var(--gold-l); }
+  #skills .section-label::before { background: var(--gold-l); }
+  #skills .section-title { color: var(--white); }
+  #skills .section-desc { color: rgba(255,255,255,0.4); }
+  .expertise-intro { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+  .expertise-box { background: rgba(201,151,42,0.07); border: 1px solid rgba(201,151,42,0.18); padding: 1.4rem; }
+  .expertise-box h4 { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-l); margin-bottom: 0.5rem; }
+  .expertise-box p { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.65; font-weight: 300; }
+  .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: rgba(201,151,42,0.08); }
+  .skill-item { background: var(--royal-d); padding: 1.6rem 1.3rem; border: 1px solid rgba(201,151,42,0.07); transition: background 0.25s, border-color 0.25s; cursor: default; }
+  .skill-item:hover { background: var(--royal); border-color: rgba(201,151,42,0.3); }
+  .skill-item:hover .skill-name { color: var(--gold-l); }
+  .skill-item:hover .skill-desc { color: rgba(255,255,255,0.55); }
+  .skill-icon { width: 36px; height: 36px; background: rgba(201,151,42,0.08); border: 1px solid rgba(201,151,42,0.18); display: flex; align-items: center; justify-content: center; margin-bottom: 0.9rem; font-size: 1rem; transition: background 0.25s; }
+  .skill-item:hover .skill-icon { background: var(--gold); }
+  .skill-name { font-weight: 600; font-size: 0.84rem; margin-bottom: 0.35rem; color: rgba(255,255,255,0.8); transition: color 0.25s; }
+  .skill-desc { font-size: 0.75rem; color: rgba(255,255,255,0.3); line-height: 1.55; font-weight: 300; transition: color 0.25s; }
+
+  /* PHILOSOPHY */
+  #philosophy { background: var(--gold-pale); text-align: center; border-top: 3px solid var(--gold); border-bottom: 3px solid var(--gold); }
+  #philosophy .section-label { justify-content: center; }
+  #philosophy .section-title { color: var(--royal-d); margin-bottom: 2rem; }
+  .philosophy-quote { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.2vw, 1.85rem); font-weight: 600; font-style: italic; line-height: 1.55; max-width: 760px; margin: 0 auto 3rem; color: var(--royal-d); }
+  .philosophy-pillars { display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
+  .pillar { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+  .pillar-num { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 2.5rem; color: rgba(201,151,42,0.3); line-height: 1; }
+  .pillar-text { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--royal); }
+
+  /* CONTACT */
+  #contact { background: var(--royal); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  #contact .section-label { color: var(--gold-l); }
+  #contact .section-label::before { background: var(--gold-l); }
+  #contact .section-title { color: var(--white); }
+  #contact .section-desc { color: rgba(255,255,255,0.5); font-weight: 300; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+  .contact-link { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: var(--white); text-decoration: none; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .contact-link:hover { background: rgba(201,151,42,0.12); border-color: rgba(201,151,42,0.4); transform: translateX(4px); }
+  .contact-link-icon { width: 36px; height: 36px; background: var(--gold); color: var(--royal-d); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.88rem; font-weight: 700; }
+  .contact-link-text strong { display: block; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-l); margin-bottom: 0.1rem; }
+  .contact-link-text span { font-size: 0.82rem; color: rgba(255,255,255,0.45); }
+
+  footer { background: var(--royal-d); border-top: 2px solid rgba(201,151,42,0.2); color: rgba(255,255,255,0.25); text-align: center; padding: 2rem; font-size: 0.74rem; letter-spacing: 0.05em; }
+  footer span { color: var(--gold-l); }
+
+  .fade-up { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-menu-btn { display: block; }
+    .hero, .about-grid, #contact { grid-template-columns: 1fr; }
+    .hero-left::after { display: none; }
+    .hero-left { padding: 4rem 1.5rem; }
+    .hero-right { min-height: 300px; padding: 3rem 1.5rem; }
+    .qual-main, .alison-grid, .expertise-intro { grid-template-columns: 1fr; }
+    .portfolio-grid, .portfolio-grid.two-col { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    section { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">&times;</button>
+  <a href="#about" onclick="document.getElementById('mobileMenu').classList.remove('open')">About</a>
+  <a href="#qualifications" onclick="document.getElementById('mobileMenu').classList.remove('open')">Qualifications</a>
+  <a href="#portfolio" onclick="document.getElementById('mobileMenu').classList.remove('open')">Portfolio</a>
+  <a href="#skills" onclick="document.getElementById('mobileMenu').classList.remove('open')">Skills</a>
+  <a href="#philosophy" onclick="document.getElementById('mobileMenu').classList.remove('open')">Philosophy</a>
+  <a href="#contact" onclick="document.getElementById('mobileMenu').classList.remove('open')">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">SARANNE<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#qualifications">Qualifications</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#philosophy">Philosophy</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-menu-btn" onclick="document.getElementById('mobileMenu').classList.add('open')" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">EFL Teacher and Lifelong Learner</div>
+    <h1 class="hero-name">Saranne<br><span class="accent">Ndamba</span></h1>
+    <p class="hero-sub">I teach English. But I also speak French and Afrikaans, and that changes everything. A teacher who has learned languages knows the struggle from the inside, and that is exactly the kind of teacher I am.</p>
+    <div class="hero-badges">
+      <span class="badge filled">Level 5 TEFL</span>
+      <span class="badge filled">MSc Finance</span>
+      <span class="badge">All Ages</span>
+      <span class="badge">All Cultures</span>
+      <span class="badge">Speaks 3 Languages</span>
+      <span class="badge">Johannesburg</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Work with me</a>
+      <a href="#portfolio" class="btn-secondary">View my teaching work &rarr;</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-ring"></div>
+    <div class="hero-ring hero-ring-2"></div>
+    <div class="photo-placeholder">
+      <svg width="46" height="46" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <p>Add your photo here</p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><span class="stat-num">5<em>+</em></span><span class="stat-label">Qualifications</span></div>
+      <div class="stat"><span class="stat-num">L<em>5</em></span><span class="stat-label">TEFL Diploma</span></div>
+      <div class="stat"><span class="stat-num">168</span><span class="stat-label">TEFL hours</span></div>
+      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Languages spoken</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Who I am</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="section-title">Students first.<br>Always.</h2>
+      <div class="about-text">
+        <p>I am a qualified EFL teacher based in <strong>Johannesburg, South Africa</strong>. My core belief is simple: every learner is different, and every lesson should reflect that. I do not teach to a textbook. I teach to the person, tailoring what I do to their goals, their pace, and their life.</p>
+        <p>I work with <strong>people of all ages and cultures</strong>, from young teenagers navigating their first foreign language to working adults looking to open new doors. Whatever the level, whatever the background, my purpose is to help each learner reach their own language goals in a way that feels purposeful and real.</p>
+        <p>I teach <strong>English</strong>, and I do it well. But what sets me apart is that I also speak <strong>French and Afrikaans</strong>, which means I have been a language learner myself. I know the confusion of grammar rules that do not make sense, the frustration of the right word not coming, and the confidence that builds when someone finally explains it in a way that clicks. A learner makes the best teacher, because I do not just know the language, I know what it costs to learn it, and I use that knowledge to help my students avoid the same mistakes and reach their goals faster.</p>
+        <p>Before teaching, I completed an <strong>MSc in Finance and Investment Management</strong> at the University of Salford. That experience sharpened my analytical thinking and my ability to break down complex ideas clearly, both of which make me a more effective and thoughtful teacher.</p>
+        <div class="philosophy-block">
+          <p>"The best teaching happens when you see the learner as a whole person, not just a language level. I put my students first because their success is the only measure that matters in the room."</p>
+        </div>
+      </div>
+    </div>
+    <div class="about-sidebar">
+      <div class="sidebar-card">
+        <h4>At a glance</h4>
+        <ul>
+          <li>Qualifi Level 5 Diploma in TEFL, 2026</li>
+          <li>MSc Finance, University of Salford, UK</li>
+          <li>3 Alison CPD certifications, 2024-2025</li>
+          <li>Based in Johannesburg, South Africa</li>
+          <li>Available online and in person</li>
+          <li>Open to relocation</li>
+        </ul>
+      </div>
+      <div class="sidebar-card">
+        <h4>Languages I speak (not teach)</h4>
+        <ul>
+          <li>English — teaching language</li>
+          <li>French — speaks fluently</li>
+          <li>Afrikaans — speaks fluently</li>
+        </ul>
+      </div>
+      <div class="sidebar-card">
+        <h4>Learner groups I teach</h4>
+        <ul>
+          <li>All ages, all cultures</li>
+          <li>A2 Elementary (teenagers)</li>
+          <li>C1-C2 Advanced (adults)</li>
+          <li>One-to-one and group settings</li>
+          <li>Online and in person</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUALIFICATIONS -->
+<section id="qualifications">
+  <div class="section-label">Credentials</div>
+  <h2 class="section-title">Qualifications</h2>
+  <p class="section-desc">Formally trained across specialist TEFL units, with a postgraduate academic background and continued professional development through CPD-certified courses.</p>
+  <div class="qual-main">
+    <div class="qual-card primary fade-up">
+      <div class="qual-icon"><svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+      <h3>Qualifi Level 5 Diploma in Teaching English as a Foreign Language (TEFL)</h3>
+      <p class="qual-org">The TEFL Academy (RQF) | Awarded 24 April 2026 | Cert No. D147609</p>
+      <p>168 guided learning hours across 10 specialist units: Lesson Planning, English Vocabulary, Pronunciation, Understanding Grammar, Receptive Skills, Productive Skills, Teaching Grammar, History of ELT, Teaching Materials and Classroom Management, and Effective Use of Resources. Regulated by Ofqual. Recognised worldwide.</p>
+    </div>
+    <div class="qual-card fade-up">
+      <div class="qual-icon"><svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+      <h3>MSc Finance and Investment Management</h3>
+      <p class="qual-org">University of Salford, Manchester, UK</p>
+      <p>Postgraduate degree in financial analysis, investment strategy, and quantitative research. Developed strong academic writing, critical thinking, and analytical skills. International study in the UK demonstrates cross-cultural adaptability and confidence.</p>
+    </div>
+  </div>
+  <div class="alison-heading">Additional CPD Certifications <span class="cpd-tag">CPD Certified by Alison</span></div>
+  <div class="alison-grid">
+    <div class="alison-card fade-up">
+      <span class="cert-type">Certificate</span>
+      <h4>Teaching English as a Foreign Language (TEFL)</h4>
+      <p class="cert-meta">Alison | 8 January 2025 | No. 5232-45027730</p>
+      <a href="https://alison.com/certification/check/8596b87c11" target="_blank" class="verify-link">Verify certificate &rarr;</a>
+    </div>
+    <div class="alison-card fade-up">
+      <span class="cert-type">Certificate</span>
+      <h4>Transformative Teaching for Unlocking Students' Potential</h4>
+      <p class="cert-meta">Alison | 29 December 2024 | No. 6824-45027730</p>
+      <a href="https://alison.com/certification/check/0365596629" target="_blank" class="verify-link">Verify certificate &rarr;</a>
+    </div>
+    <div class="alison-card fade-up">
+      <span class="cert-type">Diploma</span>
+      <h4>Educational Psychology Training</h4>
+      <p class="cert-meta">Alison | 9 January 2025 | No. 5646-45027730</p>
+      <a href="https://alison.com/certification/check/222af7e9f1" target="_blank" class="verify-link">Verify certificate &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-label">Teaching Work</div>
+  <h2 class="section-title">Teaching Portfolio</h2>
+  <p class="section-desc">All 11 documents from my formal TEFL training are available to download below, exactly as submitted. Click any card to open the document directly from GitHub.</p>
+
+  <!-- ASSIGNMENT B -->
+  <div class="assignment-group">
+    <div class="assignment-label">
+      <span class="assign-badge">Assignment B</span>
+      <h3>First Conditional Grammar Lesson | A2 Teenagers | 60 minutes</h3>
+    </div>
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card fade-up">
+        <div class="portfolio-card-top b1"><span class="card-label">Document 1</span>PPP</div>
+        <div class="portfolio-card-body">
+          <h3>PPP Grammar Lesson Table</h3>
+          <p>Full PPP lesson structure table covering all stages, timings, aims, procedures, and interaction patterns for the first conditional lesson.</p>
+          <div class="card-tags"><span class="tag">A2</span><span class="tag">Grammar</span><span class="tag">PPP</span></div>
+          <a href="https://github.com/Anne71-cloud/Anne71-cloud.github.io/raw/main/portfolio/AssignmentB_PPP_Grammar_Lesson_Table.docx" target="_blank" class="doc-link">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Document
+          </a>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up">
+        <div class="portfolio-card-top b2"><span class="card-label">Document 2</span>LP</div>
+        <div class="portfolio-card-body">
+          <h3>Lesson Plan and Justification</h3>
+          <p>Full lesson plan with a justification paragraph explaining the pedagogical choices made in the design of the lesson.</p>
+          <div class="card-tags"><span class="tag">A2</span><span class="tag">Lesson Plan</span></div>
+          <a href="https://github.com/Anne71-cloud/Anne71-cloud.github.io/raw/main/portfolio/AssignmentB_Lesson_Plan.docx" target="_blank" class="doc-link">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Document
+          </a>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up">
+        <div class="portfolio-card-top b3"><span class="card-label">Document 3</span>MAT</div>
+        <div class="portfolio-card-body">
+          <h3>Materials and Aids</h3>
+          <p>All student-facing materials including gap-fill worksheet, sentence matching activity, and class survey card, with visual aids.</p>
+          <div class="card-tags"><span class="tag">Worksheets</span><span class="tag">Visuals</span></div>
+          <a href="https://github.com/Anne71-cloud/Anne71-cloud.github.io/raw/main/portfolio/AssignmentB_Materials_with_Visuals.docx" target="_blank" class="doc-link">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Document
+          </a>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up">
+        <div class="portfolio-card-top b4"><span class="card-label">Document 4</span>TL</div>
+        <div class="portfolio-card-body">
+          <h3>Teacher Language Script</h3>
+          <p>Full teacher language in direct speech across all lesson stages, showing exactly what the teacher says at each point in the lesson.</p>
+          <div class="card-tags"><span class="tag">Direct Speech</span><span class="tag">3 pages</span></div>
+          <a href="https://github.com/Anne71-cloud/Anne71-cloud.github.io/raw/main/portfolio/AssignmentB_Teacher_Language.docx" target="_blank" class="doc-link">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Document
+          </a>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up">
+        <div class="portfolio-card-top b5"><span class="card-label">Document 5</span>BP</div>
+        <div class="portfolio-card-body">
+          <h3>Board Plan</h3>
+          <p>Two full-page illustrated board plans showing exactly what the board looks like at the presentation and practice stages of the lesson.</p>
+          <div class="card-tags"><span class="tag">Visual</span><span class="tag">Board Design</span></div>
+          <a href="https://github.com/Anne71-cloud/Anne71-cloud.github.io/raw/main/portfolio/AssignmentB_Board_Plan.docx" target="_blank" class="doc-link">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Document
+          </a>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up">
+        <div class="portfolio-card-top b6"><span class="card-label">Document 6</span>BIB</div>
+        <div class="portfolio-card-body">
+          <h3>Bibliography</h3>
+          <p>Harvard-format bibliography covering all sources referenced across the lesson plan, materials, and justification paragraph.</p>
+          <div class="card-tags"><span class="tag">Harvard</span><span class="tag">6 references</span></div>
+          <a href="https://github.com/Anne71-cloud/Anne71-cloud.github.io/raw/main/portfolio/AssignmentB_Bibliography.docx" target="_blank" class="doc-link">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Document
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ASSIGNMENT C -->
+  <div class="assignment-group">
+    <div class="assignment-label">
+      <span class="assign-badge">Assignment C</span>
+      <h3>Authentic Text Unit | C1-C2 Adults | The Guardian 2025</h3>
+    </div>
+    <div class="portfolio-grid two-col">
+
+      <div class="portfolio-card fade-up">
+        <div class="portfolio-card-top c1"><span class="card-label">Document 1</span>EVA</div>
+        <div class="portfolio-card-body">
+          <h3>Coursebook Evaluation Essay</h3>
+          <p>A 390-word critical evaluation of New Cutting Edge Advanced (Longman, 2014) for C1-C2 learners, covering communicative approach, vocabulary syllabus, and cultural inclusivity.</p>
+          <div class="card-tags"><span class="tag">C1-C2</span><span class="tag">Essay</span><span class="tag">390 words</span></div>
+          <a href="https://github.com/Anne71-cloud/Anne71-cloud.github.io/raw/main/portfolio/AssignmentC_Doc1_Coursebook_Evaluation.docx" target="_blank" class="doc-link gold">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Document
+          </a>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up">
+        <div class="portfolio-card-top c2"><span class="card-label">Document 2</span>TXT</div>
+        <div class="portfolio-card-body">
+          <h3>Authentic Text and Vocabulary Key</h3>
+          <p>The Guardian article adapted for classroom use with 12 vocabulary items highlighted and a full pre-teaching key covering collocations, idioms, and multi-word phrases.</p>
+          <div class="card-tags"><span class="tag">C1-C2</span><span class="tag">Authentic Text</span><span class="tag">12 vocab items</span></div>
+          <a href="https://github.com/Anne71-cloud/Anne71-cloud.github.io/raw/main/portfolio/AssignmentC_Doc2_Authentic_Text.docx" target="_blank" class="doc-link gold">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Document
+          </a>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up">
+        <div class="portfolio-card-top c3"><span class="card-label">Document 3</span>ACT</div>
+        <div class="portfolio-card-body">
+          <h3>Three Follow-On Activities</h3>
+          <p>Dictionary activity, online research task using the World Happiness Report, and a structured debate, each with full teacher instructions, aims, timings, and student handouts.</p>
+          <div class="card-tags"><span class="tag">C1-C2</span><span class="tag">3 Activities</span><span class="tag">Full handouts</span></div>
+          <a href="https://github.com/Anne71-cloud/Anne71-cloud.github.io/raw/main/portfolio/AssignmentC_Doc3_Three_Activities.docx" target="_blank" class="doc-link gold">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Document
+          </a>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up">
+        <div class="portfolio-card-top c4"><span class="card-label">Document 4</span>ESS</div>
+        <div class="portfolio-card-body">
+          <h3>Essay: Authentic Materials and the Internet</h3>
+          <p>A 680-word four-paragraph essay on the value of authentic materials, rationale for text and vocabulary selection, activity justification, and advantages and disadvantages of internet use in EFL teaching.</p>
+          <div class="card-tags"><span class="tag">Essay</span><span class="tag">680 words</span><span class="tag">Academic</span></div>
+          <a href="https://github.com/Anne71-cloud/Anne71-cloud.github.io/raw/main/portfolio/AssignmentC_Doc4_Essay.docx" target="_blank" class="doc-link gold">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Document
+          </a>
+        </div>
+      </div>
+
+      <div class="portfolio-card fade-up">
+        <div class="portfolio-card-top c5"><span class="card-label">Document 5</span>BIB</div>
+        <div class="portfolio-card-body">
+          <h3>Bibliography</h3>
+          <p>Harvard-format bibliography with 8 references covering the authentic text source, vocabulary methodology, authentic materials theory, and all TEFL Academy course units cited.</p>
+          <div class="card-tags"><span class="tag">Harvard</span><span class="tag">8 references</span></div>
+          <a href="https://github.com/Anne71-cloud/Anne71-cloud.github.io/raw/main/portfolio/AssignmentC_Doc5_Bibliography.docx" target="_blank" class="doc-link gold">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Document
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">What I bring</div>
+  <h2 class="section-title">Skills and Expertise</h2>
+  <p class="section-desc">Formal TEFL training, postgraduate academic rigour, CPD in educational psychology, and lived multilingual experience, all working together.</p>
+  <div class="expertise-intro">
+    <div class="expertise-box">
+      <h4>Pedagogical Knowledge</h4>
+      <p>Trained in communicative language teaching, PPP, TTT, task-based learning, and the effective use of authentic materials across levels and age groups.</p>
+    </div>
+    <div class="expertise-box">
+      <h4>Educational Psychology</h4>
+      <p>CPD-certified in Educational Psychology and Transformative Teaching, giving me evidence-based tools to unlock learner potential and sustain motivation.</p>
+    </div>
+    <div class="expertise-box">
+      <h4>Multilingual Perspective</h4>
+      <p>As a speaker of English, French, and Afrikaans, I bring genuine empathy for the language learning journey and cultural awareness across diverse learner groups.</p>
+    </div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-item"><div class="skill-icon">📐</div><div class="skill-name">Lesson Planning</div><div class="skill-desc">PPP, TTT, task-based and skills-based design tailored to each individual learner</div></div>
+    <div class="skill-item"><div class="skill-icon">📰</div><div class="skill-name">Authentic Materials</div><div class="skill-desc">Sourcing, adapting, and building rich activities around real-world texts and media</div></div>
+    <div class="skill-item"><div class="skill-icon">💬</div><div class="skill-name">Grammar Teaching</div><div class="skill-desc">Meaning, form, and pronunciation focus; strong command of English grammar systems</div></div>
+    <div class="skill-item"><div class="skill-icon">📚</div><div class="skill-name">Vocabulary Instruction</div><div class="skill-desc">Collocations, idioms, word families; Nation-informed approach to lexical development</div></div>
+    <div class="skill-item"><div class="skill-icon">🧠</div><div class="skill-name">Educational Psychology</div><div class="skill-desc">CPD-certified in unlocking student potential and transformative, motivation-led teaching</div></div>
+    <div class="skill-item"><div class="skill-icon">🌍</div><div class="skill-name">Intercultural Teaching</div><div class="skill-desc">Experienced with mixed-nationality learners; inclusive, culturally sensitive materials</div></div>
+    <div class="skill-item"><div class="skill-icon">🖥️</div><div class="skill-name">Online Teaching</div><div class="skill-desc">Confident delivering engaging one-to-one and group lessons via video call platforms</div></div>
+    <div class="skill-item"><div class="skill-icon">📊</div><div class="skill-name">Research and Analysis</div><div class="skill-desc">MSc-level analytical thinking applied to lesson evaluation and professional practice</div></div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="section-label">What I believe</div>
+  <h2 class="section-title">Teaching Philosophy</h2>
+  <p class="philosophy-quote">"Every learner is different. My job is to see that difference, respect it, and teach to it. Students come first, always, because their goals are the only goals that matter in the room."</p>
+  <div class="philosophy-pillars">
+    <div class="pillar"><span class="pillar-num">01</span><span class="pillar-text">Students First</span></div>
+    <div class="pillar"><span class="pillar-num">02</span><span class="pillar-text">Tailored to Each Learner</span></div>
+    <div class="pillar"><span class="pillar-num">03</span><span class="pillar-text">Communicative and Real</span></div>
+    <div class="pillar"><span class="pillar-num">04</span><span class="pillar-text">All Ages, All Cultures</span></div>
+    <div class="pillar"><span class="pillar-num">05</span><span class="pillar-text">Lifelong Learner Myself</span></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div>
+    <div class="section-label">Get in touch</div>
+    <h2 class="section-title">Ready to start<br>learning?</h2>
+    <p class="section-desc">Available for EFL teaching online and in person. Reach out to discuss your learning goals and how I can help you achieve them.</p>
+  </div>
+  <div class="contact-links">
+    <a href="mailto:saranne.ndamba@outlook.com" class="contact-link">
+      <div class="contact-link-icon">✉</div>
+      <div class="contact-link-text"><strong>Email</strong><span>saranne.ndamba@outlook.com</span></div>
+    </a>
+    <a href="https://linkedin.com/in/sarannendamba" class="contact-link" target="_blank">
+      <div class="contact-link-icon">in</div>
+      <div class="contact-link-text"><strong>LinkedIn</strong><span>linkedin.com/in/sarannendamba</span></div>
+    </a>
+    <a href="https://github.com/Anne71-cloud" class="contact-link" target="_blank">
+      <div class="contact-link-icon">&lt;/&gt;</div>
+      <div class="contact-link-text"><strong>GitHub Portfolio</strong><span>github.com/Anne71-cloud</span></div>
+    </a>
+    <a href="tel:+27784074857" class="contact-link">
+      <div class="contact-link-icon">☎</div>
+      <div class="contact-link-text"><strong>Phone</strong><span>+27 78 407 4857</span></div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 <span>Saranne Ndamba</span> | EFL Teacher | Johannesburg, South Africa</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id'); });
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  });
+</script>
+</body>
+</html>
